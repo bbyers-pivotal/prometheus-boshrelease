@@ -4,7 +4,7 @@ builds:
     version: '1'
   a9506927-8b43-4a73-8d63-4923855a7a7c:
     version: '2'
-  '09786c88-7c96-4a44-a627-883e32994b1a':
+  09786c88-7c96-4a44-a627-883e32994b1a:
     version: '3'
   14a4ab0b-dab1-4e35-a8bb-e2bedc0831bb:
     version: '4'
@@ -40,12 +40,6 @@ builds:
     version: 12.3.3
   84f79a57-128b-484a-b27a-d1367928b909:
     version: 13.0.0
-  ff4a355a-6b85-4cb6-8caa-e43000c98eaa:
-    version: 13.0.1
-  b9dde4b5-ad5d-414c-9f93-6cdca05c4a73:
-    version: 13.0.2
-  aedcb999-844b-4bf6-9985-8ae2b490b4ca:
-    version: 13.0.3
-  9b73e7e9-db33-4497-bdcf-3690904b9f58:
-    version: 13.0.4
+  f78c30ac-97a7-49c0-a209-d0ec59f9ecca:
+    version: 14.0.0
 format-version: '2'

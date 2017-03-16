@@ -11,16 +11,16 @@
   ],
   "__requires": [
     {
+      "type": "grafana",
+      "id": "grafana",
+      "name": "Grafana",
+      "version": "4.1.1"
+    },
+    {
       "type": "panel",
       "id": "graph",
       "name": "Graph",
       "version": ""
-    },
-    {
-      "type": "grafana",
-      "id": "grafana",
-      "name": "Grafana",
-      "version": "4.0.2"
     },
     {
       "type": "datasource",
@@ -29,74 +29,14 @@
       "version": "1.0.0"
     }
   ],
-  "id": null,
-  "title": "CF: LRPs & Tasks",
-  "tags": [
-    "cf",
-    "diego"
-  ],
-  "style": "dark",
-  "timezone": "browser",
-  "editable": false,
-  "sharedCrosshair": false,
-  "hideControls": true,
-  "time": {
-    "from": "now-1h",
-    "to": "now"
-  },
-  "timepicker": {
-    "refresh_intervals": [
-      "5s",
-      "10s",
-      "30s",
-      "1m",
-      "5m",
-      "15m",
-      "30m",
-      "1h",
-      "2h",
-      "1d"
-    ],
-    "time_options": [
-      "5m",
-      "15m",
-      "1h",
-      "6h",
-      "12h",
-      "24h",
-      "2d",
-      "7d",
-      "30d"
-    ]
-  },
-  "templating": {
-    "list": [
-      {
-        "allValue": null,
-        "current": {},
-        "datasource": "${DS_PROMETHEUS}",
-        "hide": 0,
-        "includeAll": false,
-        "label": "Deployment",
-        "multi": true,
-        "name": "bosh_deployment",
-        "options": [],
-        "query": "label_values(firehose_value_metric_bbs_tasks_completed, bosh_deployment)",
-        "refresh": 1,
-        "regex": "",
-        "sort": 0,
-        "tagValuesQuery": null,
-        "tagsQuery": null,
-        "type": "query"
-      }
-    ]
-  },
   "annotations": {
     "list": []
   },
-  "refresh": "30s",
-  "schemaVersion": 13,
-  "version": 1,
+  "editable": false,
+  "gnetId": null,
+  "graphTooltip": 0,
+  "hideControls": true,
+  "id": null,
   "links": [
     {
       "asDropdown": true,
@@ -118,16 +58,18 @@
       "url": "https://docs.cloudfoundry.org/loggregator/all_metrics.html"
     }
   ],
-  "gnetId": null,
+  "refresh": "30s",
   "rows": [
     {
-      "title": "LRPs",
+      "collapse": false,
+      "height": "200px",
       "panels": [
         {
           "aliasColors": {},
           "bars": false,
           "datasource": "${DS_PROMETHEUS}",
           "decimals": 0,
+          "description": "Cumulative number of LRPs. Emitted every 30 seconds.",
           "editable": true,
           "error": false,
           "fill": 1,
@@ -158,47 +100,47 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "avg(firehose_value_metric_bbs_lr_ps_desired{bosh_deployment=~\"$bosh_deployment\"})",
+              "expr": "sum(avg(firehose_value_metric_bbs_lr_ps_desired{environment=~\"$environment\",bosh_deployment=~\"$bosh_deployment\"}) by(bosh_deployment, bosh_job_name, bosh_job_id))",
               "intervalFactor": 2,
               "legendFormat": "Desired",
               "refId": "A",
-              "step": 4
+              "step": 2
             },
             {
-              "expr": "avg(firehose_value_metric_bbs_lr_ps_running{bosh_deployment=~\"$bosh_deployment\"})",
+              "expr": "sum(avg(firehose_value_metric_bbs_lr_ps_running{environment=~\"$environment\",bosh_deployment=~\"$bosh_deployment\"}) by(bosh_deployment, bosh_job_name, bosh_job_id))",
               "intervalFactor": 2,
               "legendFormat": "Running",
               "refId": "B",
-              "step": 4
+              "step": 2
             },
             {
-              "expr": "avg(firehose_value_metric_bbs_lr_ps_extra{bosh_deployment=~\"$bosh_deployment\"})",
+              "expr": "sum(avg(firehose_value_metric_bbs_lr_ps_extra{environment=~\"$environment\",bosh_deployment=~\"$bosh_deployment\"}) by(bosh_deployment, bosh_job_name, bosh_job_id))",
               "intervalFactor": 2,
               "legendFormat": "Extra",
               "refId": "C",
-              "step": 4
+              "step": 2
             },
             {
-              "expr": "avg(firehose_value_metric_bbs_lr_ps_missing{bosh_deployment=~\"$bosh_deployment\"})",
+              "expr": "sum(avg(firehose_value_metric_bbs_lr_ps_missing{environment=~\"$environment\",bosh_deployment=~\"$bosh_deployment\"}) by(bosh_deployment, bosh_job_name, bosh_job_id))",
               "intervalFactor": 2,
               "legendFormat": "Missing",
               "refId": "D",
-              "step": 4
+              "step": 2
             },
             {
-              "expr": "avg(firehose_value_metric_bbs_lr_ps_claimed{bosh_deployment=~\"$bosh_deployment\"})",
+              "expr": "sum(avg(firehose_value_metric_bbs_lr_ps_claimed{environment=~\"$environment\",bosh_deployment=~\"$bosh_deployment\"}) by(bosh_deployment, bosh_job_name, bosh_job_id))",
               "intervalFactor": 2,
               "legendFormat": "Claimed",
               "refId": "E",
-              "step": 4
+              "step": 2
             },
             {
-              "expr": "avg(firehose_value_metric_bbs_lr_ps_unclaimed{bosh_deployment=~\"$bosh_deployment\"})",
+              "expr": "sum(avg(firehose_value_metric_bbs_lr_ps_unclaimed{environment=~\"$environment\",bosh_deployment=~\"$bosh_deployment\"}) by(bosh_deployment, bosh_job_name, bosh_job_id))",
               "interval": "",
               "intervalFactor": 2,
               "legendFormat": "Unclaimed",
               "refId": "F",
-              "step": 4
+              "step": 2
             }
           ],
           "thresholds": [],
@@ -239,22 +181,23 @@
           ]
         }
       ],
-      "showTitle": false,
-      "titleSize": "h6",
-      "height": "200px",
       "repeat": null,
-      "repeatRowId": null,
       "repeatIteration": null,
-      "collapse": false
+      "repeatRowId": null,
+      "showTitle": false,
+      "title": "LRPs",
+      "titleSize": "h6"
     },
     {
-      "title": "Tasks",
+      "collapse": false,
+      "height": "200px",
       "panels": [
         {
           "aliasColors": {},
           "bars": false,
           "datasource": "${DS_PROMETHEUS}",
           "decimals": 0,
+          "description": "Cumulative number of Tasks. Emitted every 30 seconds.",
           "editable": true,
           "error": false,
           "fill": 1,
@@ -285,33 +228,33 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "avg(firehose_value_metric_bbs_tasks_pending{bosh_deployment=~\"$bosh_deployment\"})",
+              "expr": "sum(avg(firehose_value_metric_bbs_tasks_pending{environment=~\"$environment\",bosh_deployment=~\"$bosh_deployment\"}) by(bosh_deployment, bosh_job_name, bosh_job_id))",
               "interval": "",
               "intervalFactor": 2,
               "legendFormat": "Pending",
               "refId": "A",
-              "step": 4
+              "step": 2
             },
             {
-              "expr": "avg(firehose_value_metric_bbs_tasks_resolving{bosh_deployment=~\"$bosh_deployment\"})",
+              "expr": "sum(avg(firehose_value_metric_bbs_tasks_resolving{environment=~\"$environment\",bosh_deployment=~\"$bosh_deployment\"}) by(bosh_deployment, bosh_job_name, bosh_job_id))",
               "intervalFactor": 2,
               "legendFormat": "Resolving",
               "refId": "B",
-              "step": 4
+              "step": 2
             },
             {
-              "expr": "avg(firehose_value_metric_bbs_tasks_running{bosh_deployment=~\"$bosh_deployment\"})",
+              "expr": "sum(avg(firehose_value_metric_bbs_tasks_running{environment=~\"$environment\",bosh_deployment=~\"$bosh_deployment\"}) by(bosh_deployment, bosh_job_name, bosh_job_id))",
               "intervalFactor": 2,
               "legendFormat": "Running",
               "refId": "C",
-              "step": 4
+              "step": 2
             },
             {
-              "expr": "avg(firehose_value_metric_bbs_tasks_completed{bosh_deployment=~\"$bosh_deployment\"})",
+              "expr": "sum(avg(firehose_value_metric_bbs_tasks_completed{environment=~\"$environment\",bosh_deployment=~\"$bosh_deployment\"}) by(bosh_deployment, bosh_job_name, bosh_job_id))",
               "intervalFactor": 2,
               "legendFormat": "Completed",
               "refId": "D",
-              "step": 4
+              "step": 2
             }
           ],
           "thresholds": [],
@@ -352,22 +295,23 @@
           ]
         }
       ],
-      "showTitle": false,
-      "titleSize": "h6",
-      "height": "200px",
       "repeat": null,
-      "repeatRowId": null,
       "repeatIteration": null,
-      "collapse": false
+      "repeatRowId": null,
+      "showTitle": false,
+      "title": "Tasks",
+      "titleSize": "h6"
     },
     {
-      "title": "Dashboard Row",
+      "collapse": false,
+      "height": "200px",
       "panels": [
         {
           "aliasColors": {},
           "bars": false,
           "datasource": "${DS_PROMETHEUS}",
           "decimals": 0,
+          "description": "Cumulative number of LRP instances that have crashed and DesiredLRPs that have at least one crashed instance. Emitted every 30 seconds.",
           "editable": true,
           "error": false,
           "fill": 1,
@@ -397,18 +341,18 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "avg(firehose_value_metric_bbs_crashed_actual_lr_ps{bosh_deployment=~\"$bosh_deployment\"})",
+              "expr": "sum(avg(firehose_value_metric_bbs_crashed_actual_lr_ps{environment=~\"$environment\",bosh_deployment=~\"$bosh_deployment\"}) by(bosh_deployment, bosh_job_name, bosh_job_id))",
               "intervalFactor": 2,
               "legendFormat": "Actual",
               "refId": "A",
-              "step": 4
+              "step": 2
             },
             {
-              "expr": "avg(firehose_value_metric_bbs_crashing_desired_lr_ps{bosh_deployment=~\"$bosh_deployment\"})",
+              "expr": "sum(avg(firehose_value_metric_bbs_crashing_desired_lr_ps{environment=~\"$environment\",bosh_deployment=~\"$bosh_deployment\"}) by(bosh_deployment, bosh_job_name, bosh_job_id))",
               "intervalFactor": 2,
               "legendFormat": "Desired",
               "refId": "B",
-              "step": 4
+              "step": 2
             }
           ],
           "thresholds": [],
@@ -449,13 +393,181 @@
           ]
         }
       ],
-      "showTitle": false,
-      "titleSize": "h6",
-      "height": "200px",
       "repeat": null,
-      "repeatRowId": null,
       "repeatIteration": null,
-      "collapse": false
+      "repeatRowId": null,
+      "showTitle": false,
+      "title": "Crashing LRPs",
+      "titleSize": "h6"
+    },
+    {
+      "collapse": false,
+      "height": "200px",
+      "panels": [
+        {
+          "aliasColors": {},
+          "bars": false,
+          "datasource": "${DS_PROMETHEUS}",
+          "description": "Time in nanoseconds that the nsync-bulker took to synchronize CF apps and Diego DesiredLRPs. Emitted every 30 seconds.",
+          "fill": 1,
+          "id": 4,
+          "legend": {
+            "alignAsTable": true,
+            "avg": true,
+            "current": false,
+            "max": true,
+            "min": true,
+            "rightSide": true,
+            "show": true,
+            "total": false,
+            "values": true
+          },
+          "lines": true,
+          "linewidth": 1,
+          "links": [],
+          "nullPointMode": "null",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "span": 12,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "expr": "avg(firehose_value_metric_nsync_bulker_desired_lrp_sync_duration{environment=~\"$environment\",bosh_deployment=~\"$bosh_deployment\"}) ",
+              "intervalFactor": 2,
+              "legendFormat": "Duration",
+              "refId": "A",
+              "step": 2
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Desired LRP Sync Duration",
+          "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "transparent": true,
+          "type": "graph",
+          "xaxis": {
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "ns",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": "0",
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": false
+            }
+          ]
+        }
+      ],
+      "repeat": null,
+      "repeatIteration": null,
+      "repeatRowId": null,
+      "showTitle": false,
+      "title": "Dashboard Row",
+      "titleSize": "h6"
     }
-  ]
+  ],
+  "schemaVersion": 14,
+  "style": "dark",
+  "tags": [
+    "cf",
+    "diego"
+  ],
+  "templating": {
+    "list": [
+      {
+        "allValue": null,
+        "current": {},
+        "datasource": "${DS_PROMETHEUS}",
+        "hide": 0,
+        "includeAll": false,
+        "label": "Environment",
+        "multi": false,
+        "name": "environment",
+        "options": [],
+        "query": "label_values(firehose_value_metric_bbs_tasks_completed, environment)",
+        "refresh": 1,
+        "regex": "",
+        "sort": 1,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": null,
+        "current": {},
+        "datasource": "${DS_PROMETHEUS}",
+        "hide": 0,
+        "includeAll": false,
+        "label": "Deployment",
+        "multi": false,
+        "name": "bosh_deployment",
+        "options": [],
+        "query": "label_values(firehose_value_metric_bbs_tasks_completed{environment=~\"$environment\"}, bosh_deployment)",
+        "refresh": 1,
+        "regex": "",
+        "sort": 1,
+        "tagValuesQuery": null,
+        "tags": [],
+        "tagsQuery": null,
+        "type": "query",
+        "useTags": false
+      }
+    ]
+  },
+  "time": {
+    "from": "now-1h",
+    "to": "now"
+  },
+  "timepicker": {
+    "refresh_intervals": [
+      "5s",
+      "10s",
+      "30s",
+      "1m",
+      "5m",
+      "15m",
+      "30m",
+      "1h",
+      "2h",
+      "1d"
+    ],
+    "time_options": [
+      "5m",
+      "15m",
+      "1h",
+      "6h",
+      "12h",
+      "24h",
+      "2d",
+      "7d",
+      "30d"
+    ]
+  },
+  "timezone": "browser",
+  "title": "CF: LRPs & Tasks",
+  "version": 1
 }

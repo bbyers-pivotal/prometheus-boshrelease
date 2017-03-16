@@ -19,6 +19,19 @@ case $1 in
     pid_guard ${PIDFILE} "cf_exporter"
     echo $$ > ${PIDFILE}
 
+    <% if_p('env.http_proxy') do |http_proxy| %>
+    export HTTP_PROXY="<%= http_proxy %>"
+    export http_proxy="<%= http_proxy %>"
+    <% end %>
+    <% if_p('env.https_proxy') do |https_proxy| %>
+    export HTTPS_PROXY="<%= https_proxy %>"
+    export https_proxy="<%= https_proxy %>"
+    <% end %>
+    <% if_p('env.no_proxy') do |no_proxy| %>
+    export NO_PROXY="<%= no_proxy %>"
+    export no_proxy="<%= no_proxy %>"
+    <% end %>
+
     exec cf_exporter \
       -cf.api_url="<%= p('cf_exporter.cf.api_url') %>" \
       <% if_p('cf_exporter.cf.username') do |username| %> \
@@ -33,7 +46,7 @@ case $1 in
       <% if_p('cf_exporter.cf.client_secret') do |client_secret| %> \
       -cf.client-secret="<%= client_secret %>" \
       <% end %> \
-      -cf.deployment-name="<%= p('cf_exporter.cf.deployment_name', spec.name) %>" \
+      -cf.deployment-name="<%= p('cf_exporter.cf.deployment_name') %>" \
       <% if_p('cf_exporter.filter.collectors') do |collectors| %> \
       -filter.collectors="<%= collectors %>" \
       <% end %> \
@@ -46,6 +59,7 @@ case $1 in
       <% if_p('cf_exporter.metrics.namespace') do |namespace| %> \
       -metrics.namespace="<%= namespace %>" \
       <% end %> \
+      -metrics.environment="<%= p('cf_exporter.metrics.environment') %>" \
       <% if_p('cf_exporter.skip_ssl_verify') do |skip_ssl_verify| %> \
       -skip-ssl-verify="<%= skip_ssl_verify %>" \
       <% end %> \

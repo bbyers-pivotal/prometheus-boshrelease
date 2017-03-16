@@ -96,7 +96,6 @@ properties:
     default: admin
   grafana.security.admin_password:
     description: "default admin password"
-    default: admin
   grafana.security.secret_key:
     description: "used for signing"
   grafana.security.login_remember_days:
@@ -362,4 +361,4 @@ properties:
     description: "Name of the Prometehus datasource input name"
     default: DS_PROMETHEUS
   grafana.prometheus.dashboard_files:
-    description: "Array of dashboard json file locations"
+    description: "Array of dashboard json file locations or glob patterns"
